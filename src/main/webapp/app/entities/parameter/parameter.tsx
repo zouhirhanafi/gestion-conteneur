@@ -106,6 +106,9 @@ export const Parameter = (props: RouteComponentProps<{ url: string }>) => {
                 <th className="hand" onClick={sort('label')}>
                   <Translate contentKey="gestionConteneurApp.parameter.label">Label</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
+                <th className="hand" onClick={sort('activated')}>
+                  <Translate contentKey="gestionConteneurApp.parameter.activated">Activated</Translate> <FontAwesomeIcon icon="sort" />
+                </th>
                 <th className="hand" onClick={sort('lib2')}>
                   <Translate contentKey="gestionConteneurApp.parameter.lib2">Lib 2</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
@@ -145,6 +148,7 @@ export const Parameter = (props: RouteComponentProps<{ url: string }>) => {
                     </Button>
                   </td>
                   <td>{parameter.label}</td>
+                  <td>{parameter.activated ? 'true' : 'false'}</td>
                   <td>{parameter.lib2}</td>
                   <td>{parameter.lib3}</td>
                   <td>{parameter.refExterne}</td>

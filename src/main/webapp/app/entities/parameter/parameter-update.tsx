@@ -99,6 +99,14 @@ export const ParameterUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="text"
               />
               <ValidatedField
+                label={translate('gestionConteneurApp.parameter.activated')}
+                id="parameter-activated"
+                name="activated"
+                data-cy="activated"
+                check
+                type="checkbox"
+              />
+              <ValidatedField
                 label={translate('gestionConteneurApp.parameter.lib2')}
                 id="parameter-lib2"
                 name="lib2"

@@ -19,6 +19,7 @@
       },
       "id": "ID",
       "label": "Label",
+      "activated": "Activated",
       "lib2": "Lib 2",
       "lib3": "Lib 3",
       "refExterne": "Ref Externe",

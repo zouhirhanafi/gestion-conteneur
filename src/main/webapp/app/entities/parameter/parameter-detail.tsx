@@ -36,6 +36,12 @@ export const ParameterDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{parameterEntity.label}</dd>
           <dt>
+            <span id="activated">
+              <Translate contentKey="gestionConteneurApp.parameter.activated">Activated</Translate>
+            </span>
+          </dt>
+          <dd>{parameterEntity.activated ? 'true' : 'false'}</dd>
+          <dt>
             <span id="lib2">
               <Translate contentKey="gestionConteneurApp.parameter.lib2">Lib 2</Translate>
             </span>

@@ -1,9 +1,8 @@
 import dayjs from 'dayjs';
-import { StatutConteneur } from 'app/shared/model/enumerations/statut-conteneur.model';
 
 export interface IConteneur {
   id?: number;
-  statut?: StatutConteneur | null;
+  statut?: number | null;
   dateEntree?: string | null;
   dateSortie?: string | null;
   zone?: number | null;

@@ -16,7 +16,6 @@ import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import ma.nsi.IntegrationTest;
 import ma.nsi.domain.Conteneur;
-import ma.nsi.domain.enumeration.StatutConteneur;
 import ma.nsi.repository.ConteneurRepository;
 import ma.nsi.service.criteria.ConteneurCriteria;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,8 +35,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ConteneurResourceIT {
 
-    private static final StatutConteneur DEFAULT_STATUT = StatutConteneur.C;
-    private static final StatutConteneur UPDATED_STATUT = StatutConteneur.A;
+    private static final Integer DEFAULT_STATUT = 1;
+    private static final Integer UPDATED_STATUT = 2;
+    private static final Integer SMALLER_STATUT = 1 - 1;
 
     private static final ZonedDateTime DEFAULT_DATE_ENTREE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE_ENTREE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -172,7 +172,7 @@ class ConteneurResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(conteneur.getId().intValue())))
-            .andExpect(jsonPath("$.[*].statut").value(hasItem(DEFAULT_STATUT.toString())))
+            .andExpect(jsonPath("$.[*].statut").value(hasItem(DEFAULT_STATUT)))
             .andExpect(jsonPath("$.[*].dateEntree").value(hasItem(sameInstant(DEFAULT_DATE_ENTREE))))
             .andExpect(jsonPath("$.[*].dateSortie").value(hasItem(sameInstant(DEFAULT_DATE_SORTIE))))
             .andExpect(jsonPath("$.[*].zone").value(hasItem(DEFAULT_ZONE)))
@@ -193,7 +193,7 @@ class ConteneurResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(conteneur.getId().intValue()))
-            .andExpect(jsonPath("$.statut").value(DEFAULT_STATUT.toString()))
+            .andExpect(jsonPath("$.statut").value(DEFAULT_STATUT))
             .andExpect(jsonPath("$.dateEntree").value(sameInstant(DEFAULT_DATE_ENTREE)))
             .andExpect(jsonPath("$.dateSortie").value(sameInstant(DEFAULT_DATE_SORTIE)))
             .andExpect(jsonPath("$.zone").value(DEFAULT_ZONE))
@@ -270,6 +270,58 @@ class ConteneurResourceIT {
 
         // Get all the conteneurList where statut is null
         defaultConteneurShouldNotBeFound("statut.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllConteneursByStatutIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        conteneurRepository.saveAndFlush(conteneur);
+
+        // Get all the conteneurList where statut is greater than or equal to DEFAULT_STATUT
+        defaultConteneurShouldBeFound("statut.greaterThanOrEqual=" + DEFAULT_STATUT);
+
+        // Get all the conteneurList where statut is greater than or equal to UPDATED_STATUT
+        defaultConteneurShouldNotBeFound("statut.greaterThanOrEqual=" + UPDATED_STATUT);
+    }
+
+    @Test
+    @Transactional
+    void getAllConteneursByStatutIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        conteneurRepository.saveAndFlush(conteneur);
+
+        // Get all the conteneurList where statut is less than or equal to DEFAULT_STATUT
+        defaultConteneurShouldBeFound("statut.lessThanOrEqual=" + DEFAULT_STATUT);
+
+        // Get all the conteneurList where statut is less than or equal to SMALLER_STATUT
+        defaultConteneurShouldNotBeFound("statut.lessThanOrEqual=" + SMALLER_STATUT);
+    }
+
+    @Test
+    @Transactional
+    void getAllConteneursByStatutIsLessThanSomething() throws Exception {
+        // Initialize the database
+        conteneurRepository.saveAndFlush(conteneur);
+
+        // Get all the conteneurList where statut is less than DEFAULT_STATUT
+        defaultConteneurShouldNotBeFound("statut.lessThan=" + DEFAULT_STATUT);
+
+        // Get all the conteneurList where statut is less than UPDATED_STATUT
+        defaultConteneurShouldBeFound("statut.lessThan=" + UPDATED_STATUT);
+    }
+
+    @Test
+    @Transactional
+    void getAllConteneursByStatutIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        conteneurRepository.saveAndFlush(conteneur);
+
+        // Get all the conteneurList where statut is greater than DEFAULT_STATUT
+        defaultConteneurShouldNotBeFound("statut.greaterThan=" + DEFAULT_STATUT);
+
+        // Get all the conteneurList where statut is greater than SMALLER_STATUT
+        defaultConteneurShouldBeFound("statut.greaterThan=" + SMALLER_STATUT);
     }
 
     @Test
@@ -879,7 +931,7 @@ class ConteneurResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(conteneur.getId().intValue())))
-            .andExpect(jsonPath("$.[*].statut").value(hasItem(DEFAULT_STATUT.toString())))
+            .andExpect(jsonPath("$.[*].statut").value(hasItem(DEFAULT_STATUT)))
             .andExpect(jsonPath("$.[*].dateEntree").value(hasItem(sameInstant(DEFAULT_DATE_ENTREE))))
             .andExpect(jsonPath("$.[*].dateSortie").value(hasItem(sameInstant(DEFAULT_DATE_SORTIE))))
             .andExpect(jsonPath("$.[*].zone").value(hasItem(DEFAULT_ZONE)))

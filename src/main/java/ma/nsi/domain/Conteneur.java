@@ -3,7 +3,6 @@ package ma.nsi.domain;
 import java.io.Serializable;
 import java.time.ZonedDateTime;
 import javax.persistence.*;
-import ma.nsi.domain.enumeration.StatutConteneur;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -22,9 +21,8 @@ public class Conteneur implements Serializable {
     @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
-    @Enumerated(EnumType.STRING)
     @Column(name = "statut")
-    private StatutConteneur statut;
+    private Integer statut;
 
     @Column(name = "date_entree")
     private ZonedDateTime dateEntree;
@@ -58,16 +56,16 @@ public class Conteneur implements Serializable {
         return this;
     }
 
-    public StatutConteneur getStatut() {
+    public Integer getStatut() {
         return this.statut;
     }
 
-    public Conteneur statut(StatutConteneur statut) {
+    public Conteneur statut(Integer statut) {
         this.statut = statut;
         return this;
     }
 
-    public void setStatut(StatutConteneur statut) {
+    public void setStatut(Integer statut) {
         this.statut = statut;
     }
 
@@ -173,7 +171,7 @@ public class Conteneur implements Serializable {
     public String toString() {
         return "Conteneur{" +
             "id=" + getId() +
-            ", statut='" + getStatut() + "'" +
+            ", statut=" + getStatut() +
             ", dateEntree='" + getDateEntree() + "'" +
             ", dateSortie='" + getDateSortie() + "'" +
             ", zone=" + getZone() +

@@ -1,6 +1,9 @@
 
+// id;label;activated;lib_2;lib_3;type_id;val_1;val_2;val_3;ordre
+
 entity Parameter {
     label String
+    activated Boolean
 	lib2 String
 	lib3 String
 
@@ -29,24 +32,21 @@ entity Parameter {
 
 // chauffeur : retourner le conteneur - etat : controlé 
 
+// C ("Créé"),
+// A ("Affecté"), 
+// AS ("Attente sortie"), 
+// S ("Sortie"), 
+// AC ("A controlé"), 
+// EN ("En controle"),
+// CC ("Controlé")
 entity Conteneur {
-	statut StatutConteneur
+	statut Integer
     dateEntree ZonedDateTime
 	dateSortie ZonedDateTime
     zone Integer
     ligne Integer
     colonne Integer
 	commentaire String
-}
-
-enum StatutConteneur {
-    C ("Créé"),
-    A ("Affecté"), 
-    AS ("Attente sortie"), 
-    S ("Sortie"), 
-    AC ("A controlé"), 
-    EN ("En controle"),
-    CC ("Controlé")
 }
 
 relationship ManyToOne {
