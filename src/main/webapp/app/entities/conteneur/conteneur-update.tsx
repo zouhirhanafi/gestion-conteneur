@@ -60,7 +60,6 @@ export const ConteneurUpdate = (props: RouteComponentProps<{ id: string }>) => {
         }
       : {
           ...conteneurEntity,
-          statut: 'C',
           dateEntree: convertDateTimeFromServer(conteneurEntity.dateEntree),
           dateSortie: convertDateTimeFromServer(conteneurEntity.dateSortie),
         };
@@ -95,16 +94,8 @@ export const ConteneurUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 id="conteneur-statut"
                 name="statut"
                 data-cy="statut"
-                type="select"
-              >
-                <option value="C">{translate('gestionConteneurApp.StatutConteneur.C')}</option>
-                <option value="A">{translate('gestionConteneurApp.StatutConteneur.A')}</option>
-                <option value="AS">{translate('gestionConteneurApp.StatutConteneur.AS')}</option>
-                <option value="S">{translate('gestionConteneurApp.StatutConteneur.S')}</option>
-                <option value="AC">{translate('gestionConteneurApp.StatutConteneur.AC')}</option>
-                <option value="EN">{translate('gestionConteneurApp.StatutConteneur.EN')}</option>
-                <option value="CC">{translate('gestionConteneurApp.StatutConteneur.CC')}</option>
-              </ValidatedField>
+                type="text"
+              />
               <ValidatedField
                 label={translate('gestionConteneurApp.conteneur.dateEntree')}
                 id="conteneur-dateEntree"

@@ -158,9 +158,7 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
                         {conteneur.id}
                       </Button>
                     </td>
-                    <td>
-                      <Translate contentKey={`gestionConteneurApp.StatutConteneur.${conteneur.statut}`} />
-                    </td>
+                    <td>{conteneur.statut}</td>
                     <td>
                       {conteneur.dateEntree ? <TextFormat type="date" value={conteneur.dateEntree} format={APP_DATE_FORMAT} /> : null}
                     </td>

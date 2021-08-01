@@ -6,6 +6,10 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "activated",
+      "fieldType": "Boolean"
+    },
+    {
       "fieldName": "lib2",
       "fieldType": "String"
     },

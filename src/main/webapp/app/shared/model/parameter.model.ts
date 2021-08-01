@@ -1,6 +1,7 @@
 export interface IParameter {
   id?: number;
   label?: string | null;
+  activated?: boolean | null;
   lib2?: string | null;
   lib3?: string | null;
   refExterne?: string | null;
@@ -12,4 +13,6 @@ export interface IParameter {
   paraent?: IParameter | null;
 }
 
-export const defaultValue: Readonly<IParameter> = {};
+export const defaultValue: Readonly<IParameter> = {
+  activated: false,
+};

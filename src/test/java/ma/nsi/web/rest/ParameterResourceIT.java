@@ -34,6 +34,9 @@ class ParameterResourceIT {
     private static final String DEFAULT_LABEL = "AAAAAAAAAA";
     private static final String UPDATED_LABEL = "BBBBBBBBBB";
 
+    private static final Boolean DEFAULT_ACTIVATED = false;
+    private static final Boolean UPDATED_ACTIVATED = true;
+
     private static final String DEFAULT_LIB_2 = "AAAAAAAAAA";
     private static final String UPDATED_LIB_2 = "BBBBBBBBBB";
 
@@ -82,6 +85,7 @@ class ParameterResourceIT {
     public static Parameter createEntity(EntityManager em) {
         Parameter parameter = new Parameter()
             .label(DEFAULT_LABEL)
+            .activated(DEFAULT_ACTIVATED)
             .lib2(DEFAULT_LIB_2)
             .lib3(DEFAULT_LIB_3)
             .refExterne(DEFAULT_REF_EXTERNE)
@@ -101,6 +105,7 @@ class ParameterResourceIT {
     public static Parameter createUpdatedEntity(EntityManager em) {
         Parameter parameter = new Parameter()
             .label(UPDATED_LABEL)
+            .activated(UPDATED_ACTIVATED)
             .lib2(UPDATED_LIB_2)
             .lib3(UPDATED_LIB_3)
             .refExterne(UPDATED_REF_EXTERNE)
@@ -130,6 +135,7 @@ class ParameterResourceIT {
         assertThat(parameterList).hasSize(databaseSizeBeforeCreate + 1);
         Parameter testParameter = parameterList.get(parameterList.size() - 1);
         assertThat(testParameter.getLabel()).isEqualTo(DEFAULT_LABEL);
+        assertThat(testParameter.getActivated()).isEqualTo(DEFAULT_ACTIVATED);
         assertThat(testParameter.getLib2()).isEqualTo(DEFAULT_LIB_2);
         assertThat(testParameter.getLib3()).isEqualTo(DEFAULT_LIB_3);
         assertThat(testParameter.getRefExterne()).isEqualTo(DEFAULT_REF_EXTERNE);
@@ -170,6 +176,7 @@ class ParameterResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(parameter.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)))
+            .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())))
             .andExpect(jsonPath("$.[*].lib2").value(hasItem(DEFAULT_LIB_2)))
             .andExpect(jsonPath("$.[*].lib3").value(hasItem(DEFAULT_LIB_3)))
             .andExpect(jsonPath("$.[*].refExterne").value(hasItem(DEFAULT_REF_EXTERNE)))
@@ -192,6 +199,7 @@ class ParameterResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(parameter.getId().intValue()))
             .andExpect(jsonPath("$.label").value(DEFAULT_LABEL))
+            .andExpect(jsonPath("$.activated").value(DEFAULT_ACTIVATED.booleanValue()))
             .andExpect(jsonPath("$.lib2").value(DEFAULT_LIB_2))
             .andExpect(jsonPath("$.lib3").value(DEFAULT_LIB_3))
             .andExpect(jsonPath("$.refExterne").value(DEFAULT_REF_EXTERNE))
@@ -295,6 +303,58 @@ class ParameterResourceIT {
 
         // Get all the parameterList where label does not contain UPDATED_LABEL
         defaultParameterShouldBeFound("label.doesNotContain=" + UPDATED_LABEL);
+    }
+
+    @Test
+    @Transactional
+    void getAllParametersByActivatedIsEqualToSomething() throws Exception {
+        // Initialize the database
+        parameterRepository.saveAndFlush(parameter);
+
+        // Get all the parameterList where activated equals to DEFAULT_ACTIVATED
+        defaultParameterShouldBeFound("activated.equals=" + DEFAULT_ACTIVATED);
+
+        // Get all the parameterList where activated equals to UPDATED_ACTIVATED
+        defaultParameterShouldNotBeFound("activated.equals=" + UPDATED_ACTIVATED);
+    }
+
+    @Test
+    @Transactional
+    void getAllParametersByActivatedIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        parameterRepository.saveAndFlush(parameter);
+
+        // Get all the parameterList where activated not equals to DEFAULT_ACTIVATED
+        defaultParameterShouldNotBeFound("activated.notEquals=" + DEFAULT_ACTIVATED);
+
+        // Get all the parameterList where activated not equals to UPDATED_ACTIVATED
+        defaultParameterShouldBeFound("activated.notEquals=" + UPDATED_ACTIVATED);
+    }
+
+    @Test
+    @Transactional
+    void getAllParametersByActivatedIsInShouldWork() throws Exception {
+        // Initialize the database
+        parameterRepository.saveAndFlush(parameter);
+
+        // Get all the parameterList where activated in DEFAULT_ACTIVATED or UPDATED_ACTIVATED
+        defaultParameterShouldBeFound("activated.in=" + DEFAULT_ACTIVATED + "," + UPDATED_ACTIVATED);
+
+        // Get all the parameterList where activated equals to UPDATED_ACTIVATED
+        defaultParameterShouldNotBeFound("activated.in=" + UPDATED_ACTIVATED);
+    }
+
+    @Test
+    @Transactional
+    void getAllParametersByActivatedIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        parameterRepository.saveAndFlush(parameter);
+
+        // Get all the parameterList where activated is not null
+        defaultParameterShouldBeFound("activated.specified=true");
+
+        // Get all the parameterList where activated is null
+        defaultParameterShouldNotBeFound("activated.specified=false");
     }
 
     @Test
@@ -917,6 +977,7 @@ class ParameterResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(parameter.getId().intValue())))
             .andExpect(jsonPath("$.[*].label").value(hasItem(DEFAULT_LABEL)))
+            .andExpect(jsonPath("$.[*].activated").value(hasItem(DEFAULT_ACTIVATED.booleanValue())))
             .andExpect(jsonPath("$.[*].lib2").value(hasItem(DEFAULT_LIB_2)))
             .andExpect(jsonPath("$.[*].lib3").value(hasItem(DEFAULT_LIB_3)))
             .andExpect(jsonPath("$.[*].refExterne").value(hasItem(DEFAULT_REF_EXTERNE)))
@@ -973,6 +1034,7 @@ class ParameterResourceIT {
         em.detach(updatedParameter);
         updatedParameter
             .label(UPDATED_LABEL)
+            .activated(UPDATED_ACTIVATED)
             .lib2(UPDATED_LIB_2)
             .lib3(UPDATED_LIB_3)
             .refExterne(UPDATED_REF_EXTERNE)
@@ -994,6 +1056,7 @@ class ParameterResourceIT {
         assertThat(parameterList).hasSize(databaseSizeBeforeUpdate);
         Parameter testParameter = parameterList.get(parameterList.size() - 1);
         assertThat(testParameter.getLabel()).isEqualTo(UPDATED_LABEL);
+        assertThat(testParameter.getActivated()).isEqualTo(UPDATED_ACTIVATED);
         assertThat(testParameter.getLib2()).isEqualTo(UPDATED_LIB_2);
         assertThat(testParameter.getLib3()).isEqualTo(UPDATED_LIB_3);
         assertThat(testParameter.getRefExterne()).isEqualTo(UPDATED_REF_EXTERNE);
@@ -1071,7 +1134,7 @@ class ParameterResourceIT {
         Parameter partialUpdatedParameter = new Parameter();
         partialUpdatedParameter.setId(parameter.getId());
 
-        partialUpdatedParameter.lib2(UPDATED_LIB_2).lib3(UPDATED_LIB_3).val2(UPDATED_VAL_2).ordre(UPDATED_ORDRE);
+        partialUpdatedParameter.activated(UPDATED_ACTIVATED).lib2(UPDATED_LIB_2).val1(UPDATED_VAL_1).val3(UPDATED_VAL_3);
 
         restParameterMockMvc
             .perform(
@@ -1086,13 +1149,14 @@ class ParameterResourceIT {
         assertThat(parameterList).hasSize(databaseSizeBeforeUpdate);
         Parameter testParameter = parameterList.get(parameterList.size() - 1);
         assertThat(testParameter.getLabel()).isEqualTo(DEFAULT_LABEL);
+        assertThat(testParameter.getActivated()).isEqualTo(UPDATED_ACTIVATED);
         assertThat(testParameter.getLib2()).isEqualTo(UPDATED_LIB_2);
-        assertThat(testParameter.getLib3()).isEqualTo(UPDATED_LIB_3);
+        assertThat(testParameter.getLib3()).isEqualTo(DEFAULT_LIB_3);
         assertThat(testParameter.getRefExterne()).isEqualTo(DEFAULT_REF_EXTERNE);
-        assertThat(testParameter.getVal1()).isEqualTo(DEFAULT_VAL_1);
-        assertThat(testParameter.getVal2()).isEqualTo(UPDATED_VAL_2);
-        assertThat(testParameter.getVal3()).isEqualTo(DEFAULT_VAL_3);
-        assertThat(testParameter.getOrdre()).isEqualTo(UPDATED_ORDRE);
+        assertThat(testParameter.getVal1()).isEqualTo(UPDATED_VAL_1);
+        assertThat(testParameter.getVal2()).isEqualTo(DEFAULT_VAL_2);
+        assertThat(testParameter.getVal3()).isEqualTo(UPDATED_VAL_3);
+        assertThat(testParameter.getOrdre()).isEqualTo(DEFAULT_ORDRE);
     }
 
     @Test
@@ -1109,6 +1173,7 @@ class ParameterResourceIT {
 
         partialUpdatedParameter
             .label(UPDATED_LABEL)
+            .activated(UPDATED_ACTIVATED)
             .lib2(UPDATED_LIB_2)
             .lib3(UPDATED_LIB_3)
             .refExterne(UPDATED_REF_EXTERNE)
@@ -1130,6 +1195,7 @@ class ParameterResourceIT {
         assertThat(parameterList).hasSize(databaseSizeBeforeUpdate);
         Parameter testParameter = parameterList.get(parameterList.size() - 1);
         assertThat(testParameter.getLabel()).isEqualTo(UPDATED_LABEL);
+        assertThat(testParameter.getActivated()).isEqualTo(UPDATED_ACTIVATED);
         assertThat(testParameter.getLib2()).isEqualTo(UPDATED_LIB_2);
         assertThat(testParameter.getLib3()).isEqualTo(UPDATED_LIB_3);
         assertThat(testParameter.getRefExterne()).isEqualTo(UPDATED_REF_EXTERNE);

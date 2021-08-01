@@ -82,7 +82,7 @@ public class ConteneurQueryService extends QueryService<Conteneur> {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), Conteneur_.id));
             }
             if (criteria.getStatut() != null) {
-                specification = specification.and(buildSpecification(criteria.getStatut(), Conteneur_.statut));
+                specification = specification.and(buildRangeSpecification(criteria.getStatut(), Conteneur_.statut));
             }
             if (criteria.getDateEntree() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getDateEntree(), Conteneur_.dateEntree));

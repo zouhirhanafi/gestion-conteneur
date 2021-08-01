@@ -52,6 +52,9 @@ public class ParameterService {
                     if (parameter.getLabel() != null) {
                         existingParameter.setLabel(parameter.getLabel());
                     }
+                    if (parameter.getActivated() != null) {
+                        existingParameter.setActivated(parameter.getActivated());
+                    }
                     if (parameter.getLib2() != null) {
                         existingParameter.setLib2(parameter.getLib2());
                     }

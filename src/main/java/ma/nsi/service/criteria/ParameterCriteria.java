@@ -28,6 +28,8 @@ public class ParameterCriteria implements Serializable, Criteria {
 
     private StringFilter label;
 
+    private BooleanFilter activated;
+
     private StringFilter lib2;
 
     private StringFilter lib3;
@@ -51,6 +53,7 @@ public class ParameterCriteria implements Serializable, Criteria {
     public ParameterCriteria(ParameterCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
         this.label = other.label == null ? null : other.label.copy();
+        this.activated = other.activated == null ? null : other.activated.copy();
         this.lib2 = other.lib2 == null ? null : other.lib2.copy();
         this.lib3 = other.lib3 == null ? null : other.lib3.copy();
         this.refExterne = other.refExterne == null ? null : other.refExterne.copy();
@@ -95,6 +98,21 @@ public class ParameterCriteria implements Serializable, Criteria {
 
     public void setLabel(StringFilter label) {
         this.label = label;
+    }
+
+    public BooleanFilter getActivated() {
+        return activated;
+    }
+
+    public BooleanFilter activated() {
+        if (activated == null) {
+            activated = new BooleanFilter();
+        }
+        return activated;
+    }
+
+    public void setActivated(BooleanFilter activated) {
+        this.activated = activated;
     }
 
     public StringFilter getLib2() {
@@ -244,6 +262,7 @@ public class ParameterCriteria implements Serializable, Criteria {
         return (
             Objects.equals(id, that.id) &&
             Objects.equals(label, that.label) &&
+            Objects.equals(activated, that.activated) &&
             Objects.equals(lib2, that.lib2) &&
             Objects.equals(lib3, that.lib3) &&
             Objects.equals(refExterne, that.refExterne) &&
@@ -258,7 +277,7 @@ public class ParameterCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, label, lib2, lib3, refExterne, val1, val2, val3, ordre, typeId, paraentId);
+        return Objects.hash(id, label, activated, lib2, lib3, refExterne, val1, val2, val3, ordre, typeId, paraentId);
     }
 
     // prettier-ignore
@@ -267,6 +286,7 @@ public class ParameterCriteria implements Serializable, Criteria {
         return "ParameterCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
             (label != null ? "label=" + label + ", " : "") +
+            (activated != null ? "activated=" + activated + ", " : "") +
             (lib2 != null ? "lib2=" + lib2 + ", " : "") +
             (lib3 != null ? "lib3=" + lib3 + ", " : "") +
             (refExterne != null ? "refExterne=" + refExterne + ", " : "") +

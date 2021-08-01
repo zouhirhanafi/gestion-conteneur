@@ -3,8 +3,7 @@
   "fields": [
     {
       "fieldName": "statut",
-      "fieldType": "StatutConteneur",
-      "fieldValues": "C (Créé),A (Affecté),AS (Attente sortie),S (Sortie),AC (A controlé),EN (En controle),CC (Controlé)"
+      "fieldType": "Integer"
     },
     {
       "fieldName": "dateEntree",

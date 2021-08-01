@@ -24,6 +24,9 @@ public class Parameter implements Serializable {
     @Column(name = "label")
     private String label;
 
+    @Column(name = "activated")
+    private Boolean activated;
+
     @Column(name = "lib_2")
     private String lib2;
 
@@ -78,6 +81,19 @@ public class Parameter implements Serializable {
 
     public void setLabel(String label) {
         this.label = label;
+    }
+
+    public Boolean getActivated() {
+        return this.activated;
+    }
+
+    public Parameter activated(Boolean activated) {
+        this.activated = activated;
+        return this;
+    }
+
+    public void setActivated(Boolean activated) {
+        this.activated = activated;
     }
 
     public String getLib2() {
@@ -222,6 +238,7 @@ public class Parameter implements Serializable {
         return "Parameter{" +
             "id=" + getId() +
             ", label='" + getLabel() + "'" +
+            ", activated='" + getActivated() + "'" +
             ", lib2='" + getLib2() + "'" +
             ", lib3='" + getLib3() + "'" +
             ", refExterne='" + getRefExterne() + "'" +

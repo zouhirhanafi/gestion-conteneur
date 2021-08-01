@@ -2,7 +2,6 @@ package ma.nsi.service.criteria;
 
 import java.io.Serializable;
 import java.util.Objects;
-import ma.nsi.domain.enumeration.StatutConteneur;
 import tech.jhipster.service.Criteria;
 import tech.jhipster.service.filter.BooleanFilter;
 import tech.jhipster.service.filter.DoubleFilter;
@@ -24,28 +23,11 @@ import tech.jhipster.service.filter.ZonedDateTimeFilter;
  */
 public class ConteneurCriteria implements Serializable, Criteria {
 
-    /**
-     * Class for filtering StatutConteneur
-     */
-    public static class StatutConteneurFilter extends Filter<StatutConteneur> {
-
-        public StatutConteneurFilter() {}
-
-        public StatutConteneurFilter(StatutConteneurFilter filter) {
-            super(filter);
-        }
-
-        @Override
-        public StatutConteneurFilter copy() {
-            return new StatutConteneurFilter(this);
-        }
-    }
-
     private static final long serialVersionUID = 1L;
 
     private LongFilter id;
 
-    private StatutConteneurFilter statut;
+    private IntegerFilter statut;
 
     private ZonedDateTimeFilter dateEntree;
 
@@ -92,18 +74,18 @@ public class ConteneurCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public StatutConteneurFilter getStatut() {
+    public IntegerFilter getStatut() {
         return statut;
     }
 
-    public StatutConteneurFilter statut() {
+    public IntegerFilter statut() {
         if (statut == null) {
-            statut = new StatutConteneurFilter();
+            statut = new IntegerFilter();
         }
         return statut;
     }
 
-    public void setStatut(StatutConteneurFilter statut) {
+    public void setStatut(IntegerFilter statut) {
         this.statut = statut;
     }
 

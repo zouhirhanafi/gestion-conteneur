@@ -84,6 +84,9 @@ public class ParameterQueryService extends QueryService<Parameter> {
             if (criteria.getLabel() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLabel(), Parameter_.label));
             }
+            if (criteria.getActivated() != null) {
+                specification = specification.and(buildSpecification(criteria.getActivated(), Parameter_.activated));
+            }
             if (criteria.getLib2() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLib2(), Parameter_.lib2));
             }
