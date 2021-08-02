@@ -7,10 +7,10 @@ import tech.jhipster.service.filter.BooleanFilter;
 import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
+import tech.jhipster.service.filter.InstantFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
-import tech.jhipster.service.filter.ZonedDateTimeFilter;
 
 /**
  * Criteria class for the {@link ma.nsi.domain.Conteneur} entity. This class is used
@@ -29,9 +29,9 @@ public class ConteneurCriteria implements Serializable, Criteria {
 
     private IntegerFilter statut;
 
-    private ZonedDateTimeFilter dateEntree;
+    private InstantFilter dateEntree;
 
-    private ZonedDateTimeFilter dateSortie;
+    private InstantFilter dateSortie;
 
     private IntegerFilter zone;
 
@@ -89,33 +89,33 @@ public class ConteneurCriteria implements Serializable, Criteria {
         this.statut = statut;
     }
 
-    public ZonedDateTimeFilter getDateEntree() {
+    public InstantFilter getDateEntree() {
         return dateEntree;
     }
 
-    public ZonedDateTimeFilter dateEntree() {
+    public InstantFilter dateEntree() {
         if (dateEntree == null) {
-            dateEntree = new ZonedDateTimeFilter();
+            dateEntree = new InstantFilter();
         }
         return dateEntree;
     }
 
-    public void setDateEntree(ZonedDateTimeFilter dateEntree) {
+    public void setDateEntree(InstantFilter dateEntree) {
         this.dateEntree = dateEntree;
     }
 
-    public ZonedDateTimeFilter getDateSortie() {
+    public InstantFilter getDateSortie() {
         return dateSortie;
     }
 
-    public ZonedDateTimeFilter dateSortie() {
+    public InstantFilter dateSortie() {
         if (dateSortie == null) {
-            dateSortie = new ZonedDateTimeFilter();
+            dateSortie = new InstantFilter();
         }
         return dateSortie;
     }
 
-    public void setDateSortie(ZonedDateTimeFilter dateSortie) {
+    public void setDateSortie(InstantFilter dateSortie) {
         this.dateSortie = dateSortie;
     }
 

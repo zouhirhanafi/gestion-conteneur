@@ -65,9 +65,6 @@ public class ConteneurResource {
     @PostMapping("/conteneurs")
     public ResponseEntity<Conteneur> createConteneur(@RequestBody Conteneur conteneur) throws URISyntaxException {
         log.debug("REST request to save Conteneur : {}", conteneur);
-        if (conteneur.getId() != null) {
-            throw new BadRequestAlertException("A new conteneur cannot already have an ID", ENTITY_NAME, "idexists");
-        }
         Conteneur result = conteneurService.save(conteneur);
         return ResponseEntity
             .created(new URI("/api/conteneurs/" + result.getId()))
@@ -120,7 +117,7 @@ public class ConteneurResource {
      * or with status {@code 500 (Internal Server Error)} if the conteneur couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PatchMapping(value = "/conteneurs/{id}", consumes = "application/merge-patch+json")
+    @PatchMapping(value = "/conteneurs/{id}")
     public ResponseEntity<Conteneur> partialUpdateConteneur(
         @PathVariable(value = "id", required = false) final Long id,
         @RequestBody Conteneur conteneur

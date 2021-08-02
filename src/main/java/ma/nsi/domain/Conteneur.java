@@ -1,7 +1,7 @@
 package ma.nsi.domain;
 
 import java.io.Serializable;
-import java.time.ZonedDateTime;
+import java.time.Instant;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -17,18 +17,16 @@ public class Conteneur implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "sequenceGenerator")
-    @SequenceGenerator(name = "sequenceGenerator")
     private Long id;
 
     @Column(name = "statut")
     private Integer statut;
 
     @Column(name = "date_entree")
-    private ZonedDateTime dateEntree;
+    private Instant dateEntree;
 
     @Column(name = "date_sortie")
-    private ZonedDateTime dateSortie;
+    private Instant dateSortie;
 
     @Column(name = "zone")
     private Integer zone;
@@ -69,29 +67,29 @@ public class Conteneur implements Serializable {
         this.statut = statut;
     }
 
-    public ZonedDateTime getDateEntree() {
+    public Instant getDateEntree() {
         return this.dateEntree;
     }
 
-    public Conteneur dateEntree(ZonedDateTime dateEntree) {
+    public Conteneur dateEntree(Instant dateEntree) {
         this.dateEntree = dateEntree;
         return this;
     }
 
-    public void setDateEntree(ZonedDateTime dateEntree) {
+    public void setDateEntree(Instant dateEntree) {
         this.dateEntree = dateEntree;
     }
 
-    public ZonedDateTime getDateSortie() {
+    public Instant getDateSortie() {
         return this.dateSortie;
     }
 
-    public Conteneur dateSortie(ZonedDateTime dateSortie) {
+    public Conteneur dateSortie(Instant dateSortie) {
         this.dateSortie = dateSortie;
         return this;
     }
 
-    public void setDateSortie(ZonedDateTime dateSortie) {
+    public void setDateSortie(Instant dateSortie) {
         this.dateSortie = dateSortie;
     }
 
