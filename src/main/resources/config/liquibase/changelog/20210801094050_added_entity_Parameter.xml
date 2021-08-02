@@ -61,9 +61,9 @@
           This can be customized by adding or removing 'faker' in the 'spring.liquibase.contexts'
           Spring Boot configuration key.
     -->
-    <changeSet id="20210801094050-1-data" author="jhipster" context="faker">
+    <changeSet id="20210801094050-1-data" author="jhipster">
         <loadData
-                  file="config/liquibase/fake-data/parameter.csv"
+                  file="config/liquibase/data/parameter.csv"
                   separator=";"
                   tableName="parameter">
             <column name="id" type="numeric"/>
@@ -71,7 +71,7 @@
             <column name="activated" type="boolean"/>
             <column name="lib_2" type="string"/>
             <column name="lib_3" type="string"/>
-            <column name="ref_externe" type="string"/>
+            <column name="type_id" type="numeric"/>
             <column name="val_1" type="string"/>
             <column name="val_2" type="string"/>
             <column name="val_3" type="string"/>

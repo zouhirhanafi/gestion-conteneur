@@ -1,0 +1,31 @@
+id;label;activated;lib_2;lib_3;type_id;val_1;val_2;val_3;ordre
+11;Statut conteneur;true;statutConteneur;forms;;;;;10
+12;Zone;true;zone;forms;;;;;20
+13;Ligne;true;ligne;forms;;;;;30
+14;Colonne;true;colonne;forms;;;;;40
+15;Oui / Non;true;ouiNon;forms;;;;;50
+100;Créé;true;C;;11;;;;10
+101;Affecté;true;A;;11;;;;20
+102;Attente sortie;true;AS;;11;;;;30
+103;Sortie;true;S;;11;;;;40
+104;A controlé;true;AC;;11;;;;50
+105;En controle;true;EC;;11;;;;60
+106;Controlé;true;CO;;11;;;;70
+107;CA;true;CA;;12;;;;10
+108;CB;true;CB;;12;;;;20
+109;CC;true;CC;;12;;;;30
+110;CD;true;CD;;12;;;;40
+111;CE;true;CE;;12;;;;50
+112;BR;true;BR;;12;;;;60
+113;CR;true;CR;;12;;;;70
+114;A;true;A;;13;;;;10
+115;B;true;B;;13;;;;20
+116;C;true;C;;13;;;;30
+117;D;true;D;;13;;;;40
+118;E;true;E;;13;;;;50
+119;F;true;F;;13;;;;60
+120;1;true;1;;14;;;;10
+121;3;true;3;;14;;;;20
+122;5;true;5;;14;;;;30
+1;Oui;true;O;;15;;;;10
+0;Non;true;N;;15;;;;20
