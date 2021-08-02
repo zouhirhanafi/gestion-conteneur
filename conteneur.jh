@@ -41,7 +41,7 @@ entity Parameter {
 // CC ("Controlé")
 entity Conteneur {
 	statut Integer
-    dateEntree ZonedDateTime
+    dateEntree Instant
 	dateSortie ZonedDateTime
     zone Integer
     ligne Integer
