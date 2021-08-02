@@ -7,6 +7,7 @@ import tech.jhipster.service.filter.BooleanFilter;
 import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
+import tech.jhipster.service.filter.InstantFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
@@ -29,7 +30,7 @@ public class ConteneurCriteria implements Serializable, Criteria {
 
     private IntegerFilter statut;
 
-    private ZonedDateTimeFilter dateEntree;
+    private InstantFilter dateEntree;
 
     private ZonedDateTimeFilter dateSortie;
 
@@ -89,18 +90,18 @@ public class ConteneurCriteria implements Serializable, Criteria {
         this.statut = statut;
     }
 
-    public ZonedDateTimeFilter getDateEntree() {
+    public InstantFilter getDateEntree() {
         return dateEntree;
     }
 
-    public ZonedDateTimeFilter dateEntree() {
+    public InstantFilter dateEntree() {
         if (dateEntree == null) {
-            dateEntree = new ZonedDateTimeFilter();
+            dateEntree = new InstantFilter();
         }
         return dateEntree;
     }
 
-    public void setDateEntree(ZonedDateTimeFilter dateEntree) {
+    public void setDateEntree(InstantFilter dateEntree) {
         this.dateEntree = dateEntree;
     }
 

@@ -7,7 +7,7 @@
     },
     {
       "fieldName": "dateEntree",
-      "fieldType": "ZonedDateTime"
+      "fieldType": "Instant"
     },
     {
       "fieldName": "dateSortie",

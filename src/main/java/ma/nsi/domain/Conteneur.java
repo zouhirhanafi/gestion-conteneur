@@ -1,6 +1,7 @@
 package ma.nsi.domain;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.time.ZonedDateTime;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
@@ -25,7 +26,7 @@ public class Conteneur implements Serializable {
     private Integer statut;
 
     @Column(name = "date_entree")
-    private ZonedDateTime dateEntree;
+    private Instant dateEntree;
 
     @Column(name = "date_sortie")
     private ZonedDateTime dateSortie;
@@ -69,16 +70,16 @@ public class Conteneur implements Serializable {
         this.statut = statut;
     }
 
-    public ZonedDateTime getDateEntree() {
+    public Instant getDateEntree() {
         return this.dateEntree;
     }
 
-    public Conteneur dateEntree(ZonedDateTime dateEntree) {
+    public Conteneur dateEntree(Instant dateEntree) {
         this.dateEntree = dateEntree;
         return this;
     }
 
-    public void setDateEntree(ZonedDateTime dateEntree) {
+    public void setDateEntree(Instant dateEntree) {
         this.dateEntree = dateEntree;
     }
 
