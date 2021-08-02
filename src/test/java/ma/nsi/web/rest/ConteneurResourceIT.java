@@ -10,6 +10,7 @@ import java.time.Instant;
 import java.time.ZoneId;
 import java.time.ZoneOffset;
 import java.time.ZonedDateTime;
+import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -39,9 +40,8 @@ class ConteneurResourceIT {
     private static final Integer UPDATED_STATUT = 2;
     private static final Integer SMALLER_STATUT = 1 - 1;
 
-    private static final ZonedDateTime DEFAULT_DATE_ENTREE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
-    private static final ZonedDateTime UPDATED_DATE_ENTREE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
-    private static final ZonedDateTime SMALLER_DATE_ENTREE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(-1L), ZoneOffset.UTC);
+    private static final Instant DEFAULT_DATE_ENTREE = Instant.ofEpochMilli(0L);
+    private static final Instant UPDATED_DATE_ENTREE = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final ZonedDateTime DEFAULT_DATE_SORTIE = ZonedDateTime.ofInstant(Instant.ofEpochMilli(0L), ZoneOffset.UTC);
     private static final ZonedDateTime UPDATED_DATE_SORTIE = ZonedDateTime.now(ZoneId.systemDefault()).withNano(0);
@@ -173,7 +173,7 @@ class ConteneurResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(conteneur.getId().intValue())))
             .andExpect(jsonPath("$.[*].statut").value(hasItem(DEFAULT_STATUT)))
-            .andExpect(jsonPath("$.[*].dateEntree").value(hasItem(sameInstant(DEFAULT_DATE_ENTREE))))
+            .andExpect(jsonPath("$.[*].dateEntree").value(hasItem(DEFAULT_DATE_ENTREE.toString())))
             .andExpect(jsonPath("$.[*].dateSortie").value(hasItem(sameInstant(DEFAULT_DATE_SORTIE))))
             .andExpect(jsonPath("$.[*].zone").value(hasItem(DEFAULT_ZONE)))
             .andExpect(jsonPath("$.[*].ligne").value(hasItem(DEFAULT_LIGNE)))
@@ -194,7 +194,7 @@ class ConteneurResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(conteneur.getId().intValue()))
             .andExpect(jsonPath("$.statut").value(DEFAULT_STATUT))
-            .andExpect(jsonPath("$.dateEntree").value(sameInstant(DEFAULT_DATE_ENTREE)))
+            .andExpect(jsonPath("$.dateEntree").value(DEFAULT_DATE_ENTREE.toString()))
             .andExpect(jsonPath("$.dateSortie").value(sameInstant(DEFAULT_DATE_SORTIE)))
             .andExpect(jsonPath("$.zone").value(DEFAULT_ZONE))
             .andExpect(jsonPath("$.ligne").value(DEFAULT_LIGNE))
@@ -374,58 +374,6 @@ class ConteneurResourceIT {
 
         // Get all the conteneurList where dateEntree is null
         defaultConteneurShouldNotBeFound("dateEntree.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllConteneursByDateEntreeIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        conteneurRepository.saveAndFlush(conteneur);
-
-        // Get all the conteneurList where dateEntree is greater than or equal to DEFAULT_DATE_ENTREE
-        defaultConteneurShouldBeFound("dateEntree.greaterThanOrEqual=" + DEFAULT_DATE_ENTREE);
-
-        // Get all the conteneurList where dateEntree is greater than or equal to UPDATED_DATE_ENTREE
-        defaultConteneurShouldNotBeFound("dateEntree.greaterThanOrEqual=" + UPDATED_DATE_ENTREE);
-    }
-
-    @Test
-    @Transactional
-    void getAllConteneursByDateEntreeIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        conteneurRepository.saveAndFlush(conteneur);
-
-        // Get all the conteneurList where dateEntree is less than or equal to DEFAULT_DATE_ENTREE
-        defaultConteneurShouldBeFound("dateEntree.lessThanOrEqual=" + DEFAULT_DATE_ENTREE);
-
-        // Get all the conteneurList where dateEntree is less than or equal to SMALLER_DATE_ENTREE
-        defaultConteneurShouldNotBeFound("dateEntree.lessThanOrEqual=" + SMALLER_DATE_ENTREE);
-    }
-
-    @Test
-    @Transactional
-    void getAllConteneursByDateEntreeIsLessThanSomething() throws Exception {
-        // Initialize the database
-        conteneurRepository.saveAndFlush(conteneur);
-
-        // Get all the conteneurList where dateEntree is less than DEFAULT_DATE_ENTREE
-        defaultConteneurShouldNotBeFound("dateEntree.lessThan=" + DEFAULT_DATE_ENTREE);
-
-        // Get all the conteneurList where dateEntree is less than UPDATED_DATE_ENTREE
-        defaultConteneurShouldBeFound("dateEntree.lessThan=" + UPDATED_DATE_ENTREE);
-    }
-
-    @Test
-    @Transactional
-    void getAllConteneursByDateEntreeIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        conteneurRepository.saveAndFlush(conteneur);
-
-        // Get all the conteneurList where dateEntree is greater than DEFAULT_DATE_ENTREE
-        defaultConteneurShouldNotBeFound("dateEntree.greaterThan=" + DEFAULT_DATE_ENTREE);
-
-        // Get all the conteneurList where dateEntree is greater than SMALLER_DATE_ENTREE
-        defaultConteneurShouldBeFound("dateEntree.greaterThan=" + SMALLER_DATE_ENTREE);
     }
 
     @Test
@@ -932,7 +880,7 @@ class ConteneurResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(conteneur.getId().intValue())))
             .andExpect(jsonPath("$.[*].statut").value(hasItem(DEFAULT_STATUT)))
-            .andExpect(jsonPath("$.[*].dateEntree").value(hasItem(sameInstant(DEFAULT_DATE_ENTREE))))
+            .andExpect(jsonPath("$.[*].dateEntree").value(hasItem(DEFAULT_DATE_ENTREE.toString())))
             .andExpect(jsonPath("$.[*].dateSortie").value(hasItem(sameInstant(DEFAULT_DATE_SORTIE))))
             .andExpect(jsonPath("$.[*].zone").value(hasItem(DEFAULT_ZONE)))
             .andExpect(jsonPath("$.[*].ligne").value(hasItem(DEFAULT_LIGNE)))
