@@ -13,7 +13,7 @@ const Routes = ({ match }) => (
     <Switch>
       {/* prettier-ignore */}
       <ErrorBoundaryRoute path={`${match.url}parameter`} component={Parameter} />
-      <ErrorBoundaryRoute path={`${match.url}conteneur`} component={Conteneur} />
+      <ErrorBoundaryRoute path={`${match.url}econteneur`} component={Conteneur} />
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>
