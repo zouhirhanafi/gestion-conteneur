@@ -1,13 +1,13 @@
 id;label;activated;lib_2;lib_3;type_id;val_1;val_2;val_3;ordre
-11;Statut conteneur;true;statutConteneur;forms;;;;;10
-12;Zone;false;zone;forms;;;;;20
-13;Colonne;false;colonne;forms;;;;;30
-14;Ligne;false;ligne;forms;;;;;40
-15;Oui / Non;true;ouiNon;forms;;;;;50
-16;Type de conteneur;true;typeConteneur;forms;;;;;60
-17;Niveau;false;niveau;forms;;;;;45
-18;Position visite;true;positionVisite;forms;;;;;48
-19;Position;true;position;forms;;;;;15
+11;Statut conteneur;true;statutConteneur;forms;null;;;;10
+12;Zone;false;zone;forms;null;;;;20
+13;Colonne;false;colonne;forms;null;;;;30
+14;Ligne;false;ligne;forms;null;;;;40
+15;Oui / Non;true;ouiNon;forms;null;;;;50
+16;Type de conteneur;true;typeConteneur;forms;null;;;;60
+17;Niveau;false;niveau;forms;null;;;;45
+18;Position visite;true;positionVisite;forms;null;;;;48
+19;Position;true;position;forms;null;;;;15
 100;Créé;true;C;;11;;;;10
 101;Affecté;true;A;;11;;;;20
 102;Attente sortie;true;AS;;11;;;;30
