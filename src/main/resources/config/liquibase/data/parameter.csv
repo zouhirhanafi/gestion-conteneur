@@ -1,31 +1,91 @@
 id;label;activated;lib_2;lib_3;type_id;val_1;val_2;val_3;ordre
 11;Statut conteneur;true;statutConteneur;forms;;;;;10
-12;Zone;true;zone;forms;;;;;20
-13;Ligne;true;ligne;forms;;;;;30
-14;Colonne;true;colonne;forms;;;;;40
+12;Zone;false;zone;forms;;;;;20
+13;Colonne;false;colonne;forms;;;;;30
+14;Ligne;false;ligne;forms;;;;;40
 15;Oui / Non;true;ouiNon;forms;;;;;50
+16;Type de conteneur;true;typeConteneur;forms;;;;;60
+17;Niveau;false;niveau;forms;;;;;45
+18;Position visite;true;positionVisite;forms;;;;;48
+19;Position;true;position;forms;;;;;15
 100;Créé;true;C;;11;;;;10
 101;Affecté;true;A;;11;;;;20
 102;Attente sortie;true;AS;;11;;;;30
 103;Sortie;true;S;;11;;;;40
-104;A controlé;true;AC;;11;;;;50
-105;En controle;true;EC;;11;;;;60
-106;Controlé;true;CO;;11;;;;70
+104;A visité;true;AC;;11;;;;50
+105;En visite;true;EC;;11;;;;60
+106;Visité;true;CO;;11;;;;70
 107;CA;true;CA;;12;;;;10
 108;CB;true;CB;;12;;;;20
 109;CC;true;CC;;12;;;;30
 110;CD;true;CD;;12;;;;40
 111;CE;true;CE;;12;;;;50
-112;BR;true;BR;;12;;;;60
-113;CR;true;CR;;12;;;;70
-114;A;true;A;;13;;;;10
-115;B;true;B;;13;;;;20
-116;C;true;C;;13;;;;30
-117;D;true;D;;13;;;;40
-118;E;true;E;;13;;;;50
-119;F;true;F;;13;;;;60
-120;1;true;1;;14;;;;10
-121;3;true;3;;14;;;;20
-122;5;true;5;;14;;;;30
+112;BR1;true;BR1;;12;;;;60
+113;BR2;true;BR2;;12;;;;70
+114;BR3;true;BR3;;12;;;;80
+115;A;true;A;;13;;;;10
+116;B;true;B;;13;;;;20
+117;C;true;C;;13;;;;30
+118;D;true;D;;13;;;;40
+119;E;true;E;;13;;;;50
+120;F;true;F;;13;;;;60
+121;1;true;1;;14;;;;10
+122;2;true;2;;14;;;;20
+123;3;true;3;;14;;;;30
+124;4;true;4;;14;;;;40
+125;5;true;5;;14;;;;50
+126;6;true;6;;14;;;;60
+127;7;true;7;;14;;;;70
+128;8;true;8;;14;;;;80
+129;9;true;9;;14;;;;90
+130;10;true;10;;14;;;;100
+131;11;true;11;;14;;;;110
+132;12;true;12;;14;;;;120
+133;13;true;13;;14;;;;130
+134;14;true;14;;14;;;;140
+135;15;true;15;;14;;;;150
+136;16;true;16;;14;;;;160
+137;17;true;17;;14;;;;170
+138;18;true;18;;14;;;;180
+139;19;true;19;;14;;;;190
+140;20;true;20;;14;;;;200
+141;21;true;21;;14;;;;210
+142;22;true;22;;14;;;;220
+143;23;true;23;;14;;;;230
+144;24;true;24;;14;;;;240
+145;25;true;25;;14;;;;250
+146;26;true;26;;14;;;;260
+147;27;true;27;;14;;;;270
+148;28;true;28;;14;;;;280
+149;29;true;29;;14;;;;290
+150;30;true;30;;14;;;;300
+151;31;true;31;;14;;;;310
+152;32;true;32;;14;;;;320
+153;33;true;33;;14;;;;330
+154;34;true;34;;14;;;;340
+155;35;true;35;;14;;;;350
+156;1;true;1;;17;;;;10
+157;2;true;2;;17;;;;20
+158;3;true;3;;17;;;;30
+159;1;true;1;;18;;;;10
+160;2;true;2;;18;;;;20
+161;3;true;3;;18;;;;30
+162;4;true;4;;18;;;;40
+163;5;true;5;;18;;;;50
+164;6;true;6;;18;;;;60
+165;7;true;7;;18;;;;70
+166;8;true;8;;18;;;;80
+167;BR11;true;BR11;;18;;;;90
+168;BR12;true;BR12;;18;;;;100
+169;BR13;true;BR13;;18;;;;110
+170;BR14;true;BR14;;18;;;;120
 1;Oui;true;O;;15;;;;10
 0;Non;true;N;;15;;;;20
+200;Conteneur 20P;true;20P;;16;;;;10
+201;Conteneur 40P;true;40P;;16;;;;20
+1000;CA1A;true;CA1A;;19;;;;10
+1001;CA1B;true;CA1B;;19;;;;20
+1002;CA1C;true;CA1C;;19;;;;30
+1003;CA3A;true;CA3A;;19;;;;40
+1004;CA3B;true;CA3B;;19;;;;50
+1005;CA3C;true;CA3C;;19;;;;60

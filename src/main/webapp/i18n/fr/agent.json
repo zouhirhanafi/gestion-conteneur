@@ -1,0 +1,13 @@
+{
+  "gestionConteneurApp": {
+    "entree": {
+      "createLabel": "Déclarer une entrée"
+    },
+    "sortie": {
+      "createLabel": "Déclarer une sortie"
+    },
+    "visite": {
+      "createLabel": "Déclarer une visite"
+    }
+  }
+}

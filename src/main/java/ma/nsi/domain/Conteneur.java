@@ -1,5 +1,6 @@
 package ma.nsi.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.io.Serializable;
 import java.time.Instant;
 import javax.persistence.*;
@@ -19,6 +20,8 @@ public class Conteneur implements Serializable {
     @Id
     private Long id;
 
+    private Integer type;
+
     @Column(name = "statut")
     private Integer statut;
 
@@ -27,6 +30,8 @@ public class Conteneur implements Serializable {
 
     @Column(name = "date_sortie")
     private Instant dateSortie;
+
+    private String position;
 
     @Column(name = "zone")
     private Integer zone;
@@ -40,6 +45,10 @@ public class Conteneur implements Serializable {
     @Column(name = "commentaire")
     private String commentaire;
 
+    @Transient
+    @JsonIgnore
+    private boolean _new;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
     public Long getId() {
         return id;
@@ -52,6 +61,19 @@ public class Conteneur implements Serializable {
     public Conteneur id(Long id) {
         this.id = id;
         return this;
+    }
+
+    public Integer getType() {
+        return this.type;
+    }
+
+    public Conteneur type(Integer type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
     }
 
     public Integer getStatut() {
@@ -91,6 +113,19 @@ public class Conteneur implements Serializable {
 
     public void setDateSortie(Instant dateSortie) {
         this.dateSortie = dateSortie;
+    }
+
+    public String getPosition() {
+        return this.position;
+    }
+
+    public Conteneur Position(String position) {
+        this.position = position;
+        return this;
+    }
+
+    public void setPosition(String position) {
+        this.position = position;
     }
 
     public Integer getZone() {
@@ -143,6 +178,14 @@ public class Conteneur implements Serializable {
 
     public void setCommentaire(String commentaire) {
         this.commentaire = commentaire;
+    }
+
+    public void setNew(boolean isNew) {
+        this._new = isNew;
+    }
+
+    public boolean isNew() {
+        return this._new;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

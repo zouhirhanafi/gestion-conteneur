@@ -5,7 +5,7 @@ import javax.persistence.criteria.JoinType;
 import ma.nsi.domain.*; // for static metamodels
 import ma.nsi.domain.Parameter;
 import ma.nsi.repository.ParameterRepository;
-import ma.nsi.service.criteria.ParameterCriteria;
+import ma.nsi.service.dto.ParameterCriteria;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -83,9 +83,6 @@ public class ParameterQueryService extends QueryService<Parameter> {
             }
             if (criteria.getLabel() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLabel(), Parameter_.label));
-            }
-            if (criteria.getActivated() != null) {
-                specification = specification.and(buildSpecification(criteria.getActivated(), Parameter_.activated));
             }
             if (criteria.getLib2() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLib2(), Parameter_.lib2));

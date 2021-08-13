@@ -65,6 +65,7 @@ public class ConteneurResource {
     @PostMapping("/conteneurs")
     public ResponseEntity<Conteneur> createConteneur(@RequestBody Conteneur conteneur) throws URISyntaxException {
         log.debug("REST request to save Conteneur : {}", conteneur);
+        conteneur.setNew(true);
         Conteneur result = conteneurService.save(conteneur);
         return ResponseEntity
             .created(new URI("/api/conteneurs/" + result.getId()))

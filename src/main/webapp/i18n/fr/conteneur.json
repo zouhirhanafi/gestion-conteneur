@@ -6,6 +6,10 @@
         "refreshListLabel": "Actualiser la liste",
         "createLabel": "Créer un nouveau Conteneur",
         "createOrEditLabel": "Créer ou éditer un Conteneur",
+        "affecterPositionLabel": "Affecter une position",
+        "marquerSortieLabel": "Sortir le conteneur",
+        "visiterLabel": "Visiter le conteneur",
+        "finVisiteLabel": "Sortir le conteneur de la visite",
         "notFound": "Aucun Conteneur trouvé"
       },
       "created": "Un nouveau Conteneur a été créé avec l'identifiant {{ param }}",
@@ -18,9 +22,11 @@
         "title": "Conteneur"
       },
       "id": "ID",
+      "type": "Type",
       "statut": "Statut",
       "dateEntree": "Date Entree",
       "dateSortie": "Date Sortie",
+      "position": "Position",
       "zone": "Zone",
       "ligne": "Ligne",
       "colonne": "Colonne",

@@ -33,6 +33,10 @@ public class ConteneurService {
      */
     public Conteneur save(Conteneur conteneur) {
         log.debug("Request to save Conteneur : {}", conteneur);
+        // Long id = conteneur.getId();
+        // if (conteneur.isNew() && findOne(id).isPresent()) {
+        //     throw new RuntimeException("Conteneur " + id + " existe déjà !");
+        // }
         return conteneurRepository.save(conteneur);
     }
 
@@ -57,6 +61,12 @@ public class ConteneurService {
                     }
                     if (conteneur.getDateSortie() != null) {
                         existingConteneur.setDateSortie(conteneur.getDateSortie());
+                    }
+                    if (conteneur.getType() != null) {
+                        existingConteneur.setType(conteneur.getType());
+                    }
+                    if (conteneur.getPosition() != null) {
+                        existingConteneur.setPosition(conteneur.getPosition());
                     }
                     if (conteneur.getZone() != null) {
                         existingConteneur.setZone(conteneur.getZone());

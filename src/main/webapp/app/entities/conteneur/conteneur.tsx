@@ -11,6 +11,7 @@ import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
 import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
+import { ParamValue } from 'app/shared/components';
 
 export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
@@ -125,6 +126,9 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
                   <th className="hand" onClick={sort('id')}>
                     <Translate contentKey="gestionConteneurApp.conteneur.id">ID</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th className="hand" onClick={sort('type')}>
+                    <Translate contentKey="gestionConteneurApp.conteneur.type">Type</Translate> <FontAwesomeIcon icon="sort" />
+                  </th>
                   <th className="hand" onClick={sort('statut')}>
                     <Translate contentKey="gestionConteneurApp.conteneur.statut">Statut</Translate> <FontAwesomeIcon icon="sort" />
                   </th>
@@ -153,12 +157,13 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
               <tbody>
                 {conteneurList.map((conteneur, i) => (
                   <tr key={`entity-${i}`} data-cy="entityTable">
+                    <td>{conteneur.id}</td>
                     <td>
-                      <Button tag={Link} to={`${match.url}/${conteneur.id}`} color="link" size="sm">
-                        {conteneur.id}
-                      </Button>
+                      <ParamValue value={conteneur.type} />
                     </td>
-                    <td>{conteneur.statut}</td>
+                    <td>
+                      <ParamValue value={conteneur.statut} />
+                    </td>
                     <td>
                       {conteneur.dateEntree ? <TextFormat type="date" value={conteneur.dateEntree} format={APP_DATE_FORMAT} /> : null}
                     </td>

@@ -3,13 +3,13 @@ package ma.nsi.web.rest;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
-import java.util.Objects;
+import java.util.Map;
 import java.util.Optional;
 import ma.nsi.domain.Parameter;
-import ma.nsi.repository.ParameterRepository;
 import ma.nsi.service.ParameterQueryService;
 import ma.nsi.service.ParameterService;
-import ma.nsi.service.criteria.ParameterCriteria;
+import ma.nsi.service.dto.ParameterCriteria;
+import ma.nsi.service.dto.ParameterMinProjection;
 import ma.nsi.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -17,9 +17,15 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
 import tech.jhipster.web.util.PaginationUtil;
@@ -41,17 +47,10 @@ public class ParameterResource {
 
     private final ParameterService parameterService;
 
-    private final ParameterRepository parameterRepository;
-
     private final ParameterQueryService parameterQueryService;
 
-    public ParameterResource(
-        ParameterService parameterService,
-        ParameterRepository parameterRepository,
-        ParameterQueryService parameterQueryService
-    ) {
+    public ParameterResource(ParameterService parameterService, ParameterQueryService parameterQueryService) {
         this.parameterService = parameterService;
-        this.parameterRepository = parameterRepository;
         this.parameterQueryService = parameterQueryService;
     }
 
@@ -76,73 +75,25 @@ public class ParameterResource {
     }
 
     /**
-     * {@code PUT  /parameters/:id} : Updates an existing parameter.
+     * {@code PUT  /parameters} : Updates an existing parameter.
      *
-     * @param id the id of the parameter to save.
      * @param parameter the parameter to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated parameter,
      * or with status {@code 400 (Bad Request)} if the parameter is not valid,
      * or with status {@code 500 (Internal Server Error)} if the parameter couldn't be updated.
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
-    @PutMapping("/parameters/{id}")
-    public ResponseEntity<Parameter> updateParameter(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Parameter parameter
-    ) throws URISyntaxException {
-        log.debug("REST request to update Parameter : {}, {}", id, parameter);
+    @PutMapping("/parameters")
+    public ResponseEntity<Parameter> updateParameter(@RequestBody Parameter parameter) throws URISyntaxException {
+        log.debug("REST request to update Parameter : {}", parameter);
         if (parameter.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        if (!Objects.equals(id, parameter.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!parameterRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
         Parameter result = parameterService.save(parameter);
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, parameter.getId().toString()))
             .body(result);
-    }
-
-    /**
-     * {@code PATCH  /parameters/:id} : Partial updates given fields of an existing parameter, field will ignore if it is null
-     *
-     * @param id the id of the parameter to save.
-     * @param parameter the parameter to update.
-     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated parameter,
-     * or with status {@code 400 (Bad Request)} if the parameter is not valid,
-     * or with status {@code 404 (Not Found)} if the parameter is not found,
-     * or with status {@code 500 (Internal Server Error)} if the parameter couldn't be updated.
-     * @throws URISyntaxException if the Location URI syntax is incorrect.
-     */
-    @PatchMapping(value = "/parameters/{id}", consumes = "application/merge-patch+json")
-    public ResponseEntity<Parameter> partialUpdateParameter(
-        @PathVariable(value = "id", required = false) final Long id,
-        @RequestBody Parameter parameter
-    ) throws URISyntaxException {
-        log.debug("REST request to partial update Parameter partially : {}, {}", id, parameter);
-        if (parameter.getId() == null) {
-            throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
-        }
-        if (!Objects.equals(id, parameter.getId())) {
-            throw new BadRequestAlertException("Invalid ID", ENTITY_NAME, "idinvalid");
-        }
-
-        if (!parameterRepository.existsById(id)) {
-            throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
-        }
-
-        Optional<Parameter> result = parameterService.partialUpdate(parameter);
-
-        return ResponseUtil.wrapOrNotFound(
-            result,
-            HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, parameter.getId().toString())
-        );
     }
 
     /**
@@ -199,5 +150,17 @@ public class ParameterResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/ano/parameters/forms")
+    public ResponseEntity<Map<String, List<ParameterMinProjection>>> getParameterForms() {
+        log.debug("REST request to get Parameters forms");
+        return ResponseEntity.ok().body(parameterService.getParameterForms());
+    }
+
+    @GetMapping("/ano/parameters/plud")
+    public Long getPlud() {
+        log.debug("REST request to get Parameters last modified date");
+        return parameterService.getPlud();
     }
 }

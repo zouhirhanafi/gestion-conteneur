@@ -1,10 +1,26 @@
 {
   "global": {
-    "title": "GestionConteneur",
+    "title": "Gestion des conteneurs",
     "browsehappy": "Vous utilisez un <strong>ancien</strong> navigateur. Veuillez <a href=\"http://browsehappy.com/?locale=fr\">mettre à jour votre navigateur</a> pour une meilleure expérience.",
     "menu": {
       "home": "Accueil",
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
+      "agent": {
+        "main": "Agent",
+        "entree": "Déclarer une entrée",
+        "sortie": "Déclarer une sortie",
+        "visite": "Déclarer une visite",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+      },
+      "conteneur": {
+        "main": "Conducteur",
+        "liste": "Liste des conteneurs",
+        "entree": "Affecter une position",
+        "sortie": "Marquer comme sortie",
+        "visite": "Visiter les conteneurs",
+        "finVisite": "Fin de la visite",
+        "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
+      },
       "entities": {
         "main": "Entités",
         "parameter": "Parameter",

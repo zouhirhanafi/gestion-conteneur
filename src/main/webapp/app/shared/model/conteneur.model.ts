@@ -5,6 +5,8 @@ export interface IConteneur {
   statut?: number | null;
   dateEntree?: string | null;
   dateSortie?: string | null;
+  type?: number | null;
+  position?: string | null;
   zone?: number | null;
   ligne?: number | null;
   colonne?: number | null;
