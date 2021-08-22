@@ -7,6 +7,7 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "agent": {
         "main": "Agent",
+        "inventaire": "Inventaire",
         "entree": "Déclarer une entrée",
         "sortie": "Déclarer une sortie",
         "visite": "Déclarer une visite",

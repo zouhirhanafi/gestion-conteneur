@@ -25,6 +25,7 @@ import conteneurEntree from 'app/modules/conteneur/entree/conteneur.reducer';
 import conteneurSortie from 'app/modules/conteneur/sortie/conteneur.reducer';
 import conteneurVisite from 'app/modules/conteneur/visite/conteneur.reducer';
 import conteneurFinVisite from 'app/modules/conteneur/fin-visite/conteneur.reducer';
+import inventaire from 'app/modules/agent/inventaire/conteneur.reducer';
 import entree from 'app/modules/agent/entree/agent.reducer';
 import sortie from 'app/modules/agent/sortie/agent.reducer';
 import visite from 'app/modules/agent/visite/agent.reducer';
@@ -50,6 +51,7 @@ const rootReducer = {
   conteneurSortie,
   conteneurVisite,
   conteneurFinVisite,
+  inventaire,
   entree,
   sortie,
   visite,

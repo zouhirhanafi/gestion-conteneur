@@ -106,7 +106,7 @@ public class ConteneurService {
      * @return the entity.
      */
     @Transactional(readOnly = true)
-    public Optional<Conteneur> findOne(Long id) {
+    public Optional<Conteneur> findOne(String id) {
         log.debug("Request to get Conteneur : {}", id);
         return conteneurRepository.findById(id);
     }
@@ -116,7 +116,7 @@ public class ConteneurService {
      *
      * @param id the id of the entity.
      */
-    public void delete(Long id) {
+    public void delete(String id) {
         log.debug("Request to delete Conteneur : {}", id);
         conteneurRepository.deleteById(id);
     }

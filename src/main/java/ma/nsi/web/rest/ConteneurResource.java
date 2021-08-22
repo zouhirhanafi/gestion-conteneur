@@ -1,5 +1,6 @@
 package ma.nsi.web.rest;
 
+import java.io.File;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
@@ -14,10 +15,14 @@ import ma.nsi.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.core.io.FileUrlResource;
+import org.springframework.core.io.Resource;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -85,7 +90,7 @@ public class ConteneurResource {
      */
     @PutMapping("/conteneurs/{id}")
     public ResponseEntity<Conteneur> updateConteneur(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @RequestBody Conteneur conteneur
     ) throws URISyntaxException {
         log.debug("REST request to update Conteneur : {}, {}", id, conteneur);
@@ -120,7 +125,7 @@ public class ConteneurResource {
      */
     @PatchMapping(value = "/conteneurs/{id}")
     public ResponseEntity<Conteneur> partialUpdateConteneur(
-        @PathVariable(value = "id", required = false) final Long id,
+        @PathVariable(value = "id", required = false) final String id,
         @RequestBody Conteneur conteneur
     ) throws URISyntaxException {
         log.debug("REST request to partial update Conteneur partially : {}, {}", id, conteneur);
@@ -177,7 +182,7 @@ public class ConteneurResource {
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the conteneur, or with status {@code 404 (Not Found)}.
      */
     @GetMapping("/conteneurs/{id}")
-    public ResponseEntity<Conteneur> getConteneur(@PathVariable Long id) {
+    public ResponseEntity<Conteneur> getConteneur(@PathVariable String id) {
         log.debug("REST request to get Conteneur : {}", id);
         Optional<Conteneur> conteneur = conteneurService.findOne(id);
         return ResponseUtil.wrapOrNotFound(conteneur);
@@ -190,12 +195,42 @@ public class ConteneurResource {
      * @return the {@link ResponseEntity} with status {@code 204 (NO_CONTENT)}.
      */
     @DeleteMapping("/conteneurs/{id}")
-    public ResponseEntity<Void> deleteConteneur(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteConteneur(@PathVariable String id) {
         log.debug("REST request to delete Conteneur : {}", id);
         conteneurService.delete(id);
         return ResponseEntity
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    /**
+     * {@code GET  /conteneurs} : get all the conteneurs.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of conteneurs in body.
+     */
+    @GetMapping("/conteneurs/csv")
+    public ResponseEntity<Resource> toCsv(ConteneurCriteria criteria) {
+        log.debug("REST request to get Conteneurs by criteria: {}", criteria);
+        File file = conteneurQueryService.toCsv(criteria);
+        try {
+            Resource resource = new FileUrlResource(file.getAbsolutePath());
+            if (!resource.exists()) {
+                return badRequest();
+            }
+            String contentType = "application/octet-stream";
+            return ResponseEntity
+                .ok()
+                .contentType(MediaType.parseMediaType(contentType))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
+                .body(resource);
+        } catch (Exception e) {
+            return badRequest();
+        }
+    }
+
+    private ResponseEntity<Resource> badRequest() {
+        return ResponseEntity.notFound().build();
     }
 }

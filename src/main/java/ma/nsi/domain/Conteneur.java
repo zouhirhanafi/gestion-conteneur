@@ -18,7 +18,7 @@ public class Conteneur implements Serializable {
     private static final long serialVersionUID = 1L;
 
     @Id
-    private Long id;
+    private String id;
 
     private Integer type;
 
@@ -50,15 +50,15 @@ public class Conteneur implements Serializable {
     private boolean _new;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
-    public Long getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(Long id) {
+    public void setId(String id) {
         this.id = id;
     }
 
-    public Conteneur id(Long id) {
+    public Conteneur id(String id) {
         this.id = id;
         return this;
     }

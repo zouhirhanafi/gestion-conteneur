@@ -1,11 +1,16 @@
 package ma.nsi.service;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.Date;
 import java.util.List;
-import javax.persistence.criteria.JoinType;
 import ma.nsi.domain.*; // for static metamodels
 import ma.nsi.domain.Conteneur;
 import ma.nsi.repository.ConteneurRepository;
 import ma.nsi.service.criteria.ConteneurCriteria;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -26,11 +31,46 @@ import tech.jhipster.service.QueryService;
 public class ConteneurQueryService extends QueryService<Conteneur> {
 
     private final Logger log = LoggerFactory.getLogger(ConteneurQueryService.class);
+    private final String[] HEADERS = { "id", "dateEntree", "dateSortie", "position", "commentaire" };
 
     private final ConteneurRepository conteneurRepository;
 
     public ConteneurQueryService(ConteneurRepository conteneurRepository) {
         this.conteneurRepository = conteneurRepository;
+    }
+
+    @Transactional(readOnly = true)
+    public File toCsv(ConteneurCriteria criteria) {
+        List<Conteneur> conteneurs = findByCriteria(criteria);
+        FileWriter out = null;
+        CSVPrinter printer = null;
+        File file = null;
+        try {
+            file = new File("inventaire-" + new Date().getTime() + ".csv");
+            out = new FileWriter(file);
+            printer = new CSVPrinter(out, CSVFormat.EXCEL.builder().setHeader(HEADERS).build());
+            for (Conteneur conteneur : conteneurs) {
+                printer.printRecord(
+                    conteneur.getId(),
+                    conteneur.getDateEntree(),
+                    conteneur.getDateSortie(),
+                    conteneur.getPosition(),
+                    conteneur.getCommentaire()
+                );
+            }
+        } catch (Exception e) {} finally {
+            if (printer != null) {
+                try {
+                    printer.close();
+                } catch (IOException e) {}
+            }
+            if (out != null) {
+                try {
+                    out.close();
+                } catch (IOException e) {}
+            }
+        }
+        return file;
     }
 
     /**
@@ -79,7 +119,10 @@ public class ConteneurQueryService extends QueryService<Conteneur> {
         Specification<Conteneur> specification = Specification.where(null);
         if (criteria != null) {
             if (criteria.getId() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getId(), Conteneur_.id));
+                specification = specification.and(buildStringSpecification(criteria.getId(), Conteneur_.id));
+            }
+            if (criteria.getPosition() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getPosition(), Conteneur_.position));
             }
             if (criteria.getStatut() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getStatut(), Conteneur_.statut));

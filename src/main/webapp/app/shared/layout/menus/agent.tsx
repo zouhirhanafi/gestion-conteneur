@@ -12,6 +12,9 @@ export const AgentMenu = props => (
     style={{ maxHeight: '80vh', overflow: 'auto' }}
   >
     <>{/* to avoid warnings when empty */}</>
+    <MenuItem icon="asterisk" to="/agent/inventaire">
+      <Translate contentKey="global.menu.agent.inventaire" />
+    </MenuItem>
     <MenuItem icon="asterisk" to="/agent/entree">
       <Translate contentKey="global.menu.agent.entree" />
     </MenuItem>

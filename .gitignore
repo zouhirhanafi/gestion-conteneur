@@ -65,6 +65,7 @@ local.properties
 *.orig
 classes/
 out/
+.vscode
 
 ######################
 # Visual Studio Code

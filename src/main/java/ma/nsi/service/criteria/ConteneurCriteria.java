@@ -25,7 +25,9 @@ public class ConteneurCriteria implements Serializable, Criteria {
 
     private static final long serialVersionUID = 1L;
 
-    private LongFilter id;
+    private StringFilter id;
+
+    private StringFilter position;
 
     private IntegerFilter statut;
 
@@ -59,19 +61,34 @@ public class ConteneurCriteria implements Serializable, Criteria {
         return new ConteneurCriteria(this);
     }
 
-    public LongFilter getId() {
+    public StringFilter getId() {
         return id;
     }
 
-    public LongFilter id() {
+    public StringFilter id() {
         if (id == null) {
-            id = new LongFilter();
+            id = new StringFilter();
         }
         return id;
     }
 
-    public void setId(LongFilter id) {
+    public void setId(StringFilter id) {
         this.id = id;
+    }
+
+    public StringFilter getPosition() {
+        return position;
+    }
+
+    public StringFilter position() {
+        if (position == null) {
+            position = new StringFilter();
+        }
+        return position;
+    }
+
+    public void setPosition(StringFilter position) {
+        this.position = position;
     }
 
     public IntegerFilter getStatut() {

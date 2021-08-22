@@ -3,6 +3,7 @@
     "conteneur": {
       "home": {
         "title": "Conteneurs",
+        "export": "Exporter",
         "refreshListLabel": "Actualiser la liste",
         "createLabel": "Créer un nouveau Conteneur",
         "createOrEditLabel": "Créer ou éditer un Conteneur",
