@@ -24,8 +24,8 @@ const apiUrl = 'api/conteneurs';
 export const getEntities = createAsyncThunk('conteneurListe/fetch_entity_list', async ({ page, size, sort, query }: IQueryParams) => {
   const requestUrl = `${apiUrl}${
     sort ? `?page=${page}&size=${size}&sort=${sort}&` : '?'
-  }statut.in=101&statut.in=106&cacheBuster=${new Date().getTime()}&${query}`;
-  return axios.get<IConteneur[]>(requestUrl);
+  }statut.in=101&statut.in=106&cacheBuster=${new Date().getTime()}`;
+  return axios.get<IConteneur[]>(requestUrl, { params: query });
 });
 
 export const getEntity = createAsyncThunk(

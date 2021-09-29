@@ -9,17 +9,25 @@ import { exportCsv, getEntities, reset } from './conteneur.reducer';
 import { IConteneur } from 'app/shared/model/conteneur.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import { convertFilterDashToPoint, overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ParamValue } from 'app/shared/components';
+import { SearchForm } from './search-form';
+import { convertDateTimeToServer } from 'app/shared/util/date-utils';
+
+const defaultQuery = {
+  'statut.in': [100, 101, 102, 104, 105, 106],
+};
 
 export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
-  const [paginationState, setPaginationState] = useState(
-    overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search)
-  );
+  const [paginationState, setPaginationState] = useState({
+    ...overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search),
+    query: defaultQuery,
+  });
   const [sorting, setSorting] = useState(false);
+  const [resetForm, setResetForm] = useState(false);
 
   const conteneurList = useAppSelector(state => state.inventaire.entities);
   const loading = useAppSelector(state => state.inventaire.loading);
@@ -34,6 +42,7 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
+        query: paginationState.query,
       })
     );
   };
@@ -42,9 +51,10 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
     dispatch(reset());
     setPaginationState({
       ...paginationState,
+      query: defaultQuery,
       activePage: 1,
     });
-    dispatch(getEntities({}));
+    dispatch(getEntities({ query: defaultQuery }));
   };
 
   useEffect(() => {
@@ -87,13 +97,33 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
     });
     setSorting(true);
   };
+  const search = values => {
+    values['dateEntree-greaterThanOrEqual'] = convertDateTimeToServer(values['dateEntree-greaterThanOrEqual']);
+    values['dateEntree-lowerThanOrEqual'] = convertDateTimeToServer(values['dateEntree-lowerThanOrEqual']);
+    values['dateSortie-greaterThanOrEqual'] = convertDateTimeToServer(values['dateSortie-greaterThanOrEqual']);
+    values['dateSortie-lowerThanOrEqual'] = convertDateTimeToServer(values['dateSortie-lowerThanOrEqual']);
+    const query = convertFilterDashToPoint(values);
+    dispatch(reset());
+    setPaginationState({
+      ...paginationState,
+      activePage: 1,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      query,
+    });
+    setSorting(true);
+  };
 
   const handleSyncList = () => {
     resetAll();
+    setResetForm(!resetForm);
   };
 
   const handleExport = () => {
-    exportCsv({});
+    exportCsv({
+      sort: `${paginationState.sort},${paginationState.order}`,
+      query: paginationState.query,
+    });
   };
 
   const { match } = props;
@@ -113,6 +143,7 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
           </Button>
         </div>
       </h2>
+      <SearchForm handleSearch={search} loading={loading} reset={resetForm} />
       <div className="table-responsive">
         <InfiniteScroll
           pageStart={paginationState.activePage}
@@ -148,6 +179,7 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
                     <Translate contentKey="gestionConteneurApp.conteneur.commentaire">Commentaire</Translate>{' '}
                     <FontAwesomeIcon icon="sort" />
                   </th>
+                  <th />
                 </tr>
               </thead>
               <tbody>
@@ -168,6 +200,16 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
                     </td>
                     <td>{conteneur.position}</td>
                     <td>{conteneur.commentaire}</td>
+                    <td className="text-right">
+                      <div className="btn-group flex-btn-group-container">
+                        <Button tag={Link} to={`${match.url}/${conteneur.id}/edit`} color="primary" size="sm" data-cy="entityEditButton">
+                          <FontAwesomeIcon icon="pencil-alt" />{' '}
+                          <span className="d-none d-md-inline">
+                            <Translate contentKey="entity.action.edit">Edit</Translate>
+                          </span>
+                        </Button>
+                      </div>
+                    </td>
                   </tr>
                 ))}
               </tbody>

@@ -94,3 +94,15 @@ conteneur -> Conducteur
     sortie
         valider la sotie a la place d editer
 
+
+Conducteur:
+- liste des conteneurs
+    ajouter recherche par id - ok
+    trier par date entree decroissant - ok
+
+- voir la possibilité de remplir l heure automatiquement - ok
+
+
+- dans inventaire ajouter la possibilité de modifier tous les champs - ok
+
+

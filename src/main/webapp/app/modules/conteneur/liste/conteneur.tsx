@@ -9,18 +9,24 @@ import { getEntities, reset } from './conteneur.reducer';
 import { IConteneur } from 'app/shared/model/conteneur.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { ASC, DESC, ITEMS_PER_PAGE, SORT } from 'app/shared/util/pagination.constants';
-import { overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
+import { convertFilterDashToPoint, overridePaginationStateWithQueryParams } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { ParamValue } from 'app/shared/components';
+import { SearchForm } from './search-form';
 
+const defaultQuery = {
+  'id-contains': undefined,
+};
 export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
-  const [paginationState, setPaginationState] = useState(
-    overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search)
-  );
+  const [paginationState, setPaginationState] = useState({
+    ...overridePaginationStateWithQueryParams(getSortState(props.location, ITEMS_PER_PAGE, 'id'), props.location.search),
+    query: defaultQuery,
+    sort: 'dateEntree',
+    order: 'desc',
+  });
   const [sorting, setSorting] = useState(false);
-  const [id, setId] = useState();
 
   const conteneurList = useAppSelector(state => state.conteneurListe.entities);
   const loading = useAppSelector(state => state.conteneurListe.loading);
@@ -35,7 +41,7 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
         page: paginationState.activePage - 1,
         size: paginationState.itemsPerPage,
         sort: `${paginationState.sort},${paginationState.order}`,
-        query: id ? `id=${id}` : '',
+        query: paginationState.query,
       })
     );
   };
@@ -44,6 +50,7 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
     dispatch(reset());
     setPaginationState({
       ...paginationState,
+      query: defaultQuery,
       activePage: 1,
     });
     dispatch(getEntities({}));
@@ -94,6 +101,19 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
     resetAll();
   };
 
+  const search = values => {
+    const query = convertFilterDashToPoint(values);
+    dispatch(reset());
+    setPaginationState({
+      ...paginationState,
+      activePage: 1,
+      // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+      // @ts-ignore
+      query,
+    });
+    setSorting(true);
+  };
+
   const { match } = props;
 
   return (
@@ -107,6 +127,7 @@ export const Conteneur = (props: RouteComponentProps<{ url: string }>) => {
           </Button>
         </div>
       </h2>
+      <SearchForm handleSearch={search} loading={loading} reset={sorting} />
       <div className="table-responsive">
         <InfiniteScroll
           pageStart={paginationState.activePage}

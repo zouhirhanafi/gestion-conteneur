@@ -3,12 +3,14 @@ package ma.nsi.service;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.Date;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.List;
 import ma.nsi.domain.*; // for static metamodels
 import ma.nsi.domain.Conteneur;
 import ma.nsi.repository.ConteneurRepository;
 import ma.nsi.service.criteria.ConteneurCriteria;
+import ma.nsi.utils.UtilDateTime;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.slf4j.Logger;
@@ -46,19 +48,22 @@ public class ConteneurQueryService extends QueryService<Conteneur> {
         CSVPrinter printer = null;
         File file = null;
         try {
-            file = new File("inventaire-" + new Date().getTime() + ".csv");
+            Path path = Files.createTempFile("inv", ".csv");
+            file = path.toFile();
             out = new FileWriter(file);
-            printer = new CSVPrinter(out, CSVFormat.EXCEL.builder().setHeader(HEADERS).build());
+            printer = new CSVPrinter(out, CSVFormat.DEFAULT.builder().setHeader(HEADERS).setDelimiter(';').build());
             for (Conteneur conteneur : conteneurs) {
                 printer.printRecord(
                     conteneur.getId(),
-                    conteneur.getDateEntree(),
-                    conteneur.getDateSortie(),
+                    UtilDateTime.format(conteneur.getDateEntree()),
+                    UtilDateTime.format(conteneur.getDateSortie()),
                     conteneur.getPosition(),
                     conteneur.getCommentaire()
                 );
             }
-        } catch (Exception e) {} finally {
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
             if (printer != null) {
                 try {
                     printer.close();

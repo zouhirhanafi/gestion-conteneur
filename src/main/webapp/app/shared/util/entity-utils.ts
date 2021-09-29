@@ -1,5 +1,6 @@
 import pick from 'lodash/pick';
 import { IPaginationBaseState } from 'react-jhipster';
+import _ from 'lodash';
 
 /**
  * Removes fields with an 'id' field that equals ''.
@@ -34,3 +35,20 @@ export const overridePaginationStateWithQueryParams = (paginationBaseState: IPag
   }
   return paginationBaseState;
 };
+
+export const convertFilterDashToPoint = (filters = {}) =>
+  _.reduce(
+    filters,
+    (result, value, key) => {
+      // // eslint-disable-next-line no-console
+      // console.log('key ? value ? result ? ', key, value, result);
+      if (value) {
+        key = key.replace('-', '.');
+        // console.log('key apres ?', key);
+        result[key] = value;
+        // console.log('result apres ?', result);
+      }
+      return result;
+    },
+    {}
+  );

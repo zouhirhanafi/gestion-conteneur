@@ -226,6 +226,7 @@ public class ConteneurResource {
                 .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + file.getName() + "\"")
                 .body(resource);
         } catch (Exception e) {
+            e.printStackTrace();
             return badRequest();
         }
     }

@@ -99,7 +99,9 @@
       }
     },
     "field": {
-      "id": "ID"
+      "id": "ID",
+      "from": "De",
+      "to": "A"
     },
     "ribbon": {
       "dev": "Développement"
@@ -116,6 +118,7 @@
       "delete": "Supprimer",
       "open": "Ouvrir",
       "save": "Sauvegarder",
+      "search": "Chercher",
       "view": "Voir"
     },
     "detail": {

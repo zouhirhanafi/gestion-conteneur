@@ -3,7 +3,7 @@ jib {
         image = "adoptopenjdk:11-jre-hotspot"
     }
     to {
-        image = "pdockercr.azurecr.io/gestionconteneur:1.2.0"
+        image = "pdockercr.azurecr.io/gestionconteneur:${project.version}"
     }
     container {
         entrypoint = ["bash", "-c", "/entrypoint.sh"]
